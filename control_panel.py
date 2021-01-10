@@ -1,59 +1,56 @@
-import time
-
 import pygame
 
 from consts import Consts, Assets
 
 
 class ControlPanel:
-    def __init__(self):
-        self.panel_color = Consts.CONTROL_PANEL_COLOR
-        self.panel_width = Consts.CONTROL_PANEL_WIDTH
-        self.panel_height = Consts.CONTROL_PANEL_HEIGHT
-        self.panel_x = 0
-        self.panel_y = 0
+    def __init__(self, player):
+        self.player = player
         self.images = Assets()
-        self.time = time.time()
+        self._panel_x = 0
+        self._panel_y = 0
 
     def draw(self, window, gold):
         self.images.load()
         pygame.display.set_icon(self.images.TREASURE)
-        self.draw_panel(window)
-        self.draw_amount_of_gold(window, gold)
-        self.draw_buttons(window)
-        self.draw_description(window)
-        self.show_time(window)
+        self._draw_panel(window)
+        self._draw_amount_of_gold(window, gold)
+        self._draw_buttons(window)
+        self._draw_description(window)
+        self._show_time(window)
 
-    def draw_panel(self, window):
-        pygame.draw.rect(window, self.panel_color, (self.panel_x, self.panel_y,
-                                                    self.panel_width,
-                                                    self.panel_height))
+    def _draw_panel(self, window):
+        pygame.draw.rect(window, Consts.CONTROL_PANEL_COLOR, (self._panel_x, self._panel_y,
+                                                              Consts.CONTROL_PANEL_WIDTH,
+                                                              Consts.CONTROL_PANEL_HEIGHT))
 
     @staticmethod
-    def draw_amount_of_gold(window, gold):
+    def _draw_amount_of_gold(window, gold):
         font = pygame.font.SysFont(Consts.FONT, Consts.GOLD_TEXT_SIZE)
         label = font.render("Kotloki: {}".format(gold), True, Consts.GOLD_TEXT_COLOR)
-        text_rect = label.get_rect(center=(Consts.CONTROL_PANEL_WIDTH / 2, 50))
+        text_rect = label.get_rect(center=(Consts.CONTROL_PANEL_WIDTH / 2, Consts.GOLD_TEXT_MARGIN_TOP))
         window.blit(label, text_rect)
 
-    def draw_buttons(self, window):
-        window.blit(self.images.WOODCUTTERS, Consts.BUILDING_0_POSITION)
-        window.blit(self.images.QUARRY, Consts.BUILDING_1_POSITION)
-        window.blit(self.images.SAWMILL, Consts.BUILDING_2_POSITION)
-        window.blit(self.images.GOLD_MINE, Consts.BUILDING_3_POSITION)
-        window.blit(self.images.GOLD_MINT, Consts.BUILDING_4_POSITION)
+    def _draw_buttons(self, window):
+        window.blit(self.images.WOODCUTTERS, Consts.PANEL_BUILDING_0_POSITION)
+        window.blit(self.images.QUARRY, Consts.PANEL_BUILDING_1_POSITION)
+        window.blit(self.images.SAWMILL, Consts.PANEL_BUILDING_2_POSITION)
+        window.blit(self.images.GOLD_MINE, Consts.PANEL_BUILDING_3_POSITION)
+        window.blit(self.images.GOLD_MINT, Consts.PANEL_BUILDING_4_POSITION)
+        window.blit(self.images.BACK, Consts.BACK_BUTTON_POSITION)
+        window.blit(self.images.FORWARD, Consts.FORWARD_BUTTON_POSITION)
 
-    def show_time(self, window):
-        current_time = time.time()
+    def _show_time(self, window):
         time_font = pygame.font.SysFont('inkfree', Consts.TIME_TEXT_SIZE)
-        time_text = time_font.render('Zygor: {}'.format(int(current_time-self.time)), True, Consts.DESCRIPTION_TEXT_COLOR)
+        time_text = time_font.render('Zygor: {}'.format(int(self.player.get_game_time())), True,
+                                     Consts.DESCRIPTION_TEXT_COLOR)
         time_text_rect = time_text.get_rect()
         time_text_rect.center = Consts.TIME_TEXT_POSITION
         window.blit(time_text, time_text_rect)
 
     @staticmethod
-    def draw_description(window):
-        description_font = pygame.font.SysFont('inkfree', Consts.DESCRIPTION_TEXT_SIZE)
+    def _draw_description(window):
+        description_font = pygame.font.SysFont(Consts.FONT, Consts.DESCRIPTION_TEXT_SIZE)
 
         text_0 = description_font.render('Drwal', True, Consts.DESCRIPTION_TEXT_COLOR)
         text_0_rect = text_0.get_rect()
