@@ -37,7 +37,7 @@ class Consts:
     TEXT_3_POSITION = (212, 360)
     TEXT_4_POSITION = (70, 510)
     # Game board
-    GAME_BOARD_COLOR = (56, 213, 66)
+    GAME_BOARD_COLOR = (50,205,50)
     GAME_BOARD_WIDTH = 900
     GAME_BOARD_HEIGHT = 800
     NUMBER_OF_ROWS = 5
@@ -52,15 +52,13 @@ class Consts:
 
 class Assets:
     """It stores graphic resources."""
-    # pylint: disable=too-few-public-methods
 
     @classmethod
     def load(cls):
-        cls.GAME_BACKGROUND = pygame.image.load("assets/game_background.png")
         cls.CONTROL_PANEL_BACKGROUND = pygame.image.load("assets/wood_background.png")
         cls.GOLD_MINE = pygame.image.load("assets/gold_mine.png")
         cls.GOLD_MINT = pygame.image.load("assets/gold_mint.png")
-        cls.QUARRY = pygame.image.load("assets/quary.png")
+        cls.QUARRY = pygame.image.load("assets/quarry.png")
         cls.SAWMILL = pygame.image.load("assets/sawmill.png")
         cls.TREASURE = pygame.image.load("assets/treasure.png")
         cls.WOODCUTTERS = pygame.image.load("assets/woodcutters.png")

@@ -1,27 +1,25 @@
-
-
 class Caretaker:
     def __init__(self, player):
-        self._history = []
+        self.__history = []
         self.player = player
-        self._iterator = 0
+        self.__iterator = 0
         self.store_snapshot()
 
     def store_snapshot(self):
-        del self._history[self._iterator:]
-        self._iterator += 1
-        self._history.append(self.player.save_snapshop())
+        del self.__history[self.__iterator:]
+        self.__iterator += 1
+        self.__history.append(self.player.save_snapshop())
 
     def undo(self):
-        if len(self._history):
-            self.player.restore_snapshot(self._history[self._iterator - 1])
-            self._iterator -= 1
+        if len(self.__history):
+            self.player.restore_snapshot(self.__history[self.__iterator - 1])
+            self.__iterator -= 1
         else:
-            print("Ni mo zapisów")
+            print("No more saves back!")
 
     def redo(self):
-        if len(self._history) >= self._iterator + 2:
-            self.player.restore_snapshot(self._history[self._iterator + 1])
-            self._iterator += 1
+        if len(self.__history) >= self.__iterator + 2:
+            self.player.restore_snapshot(self.__history[self.__iterator + 1])
+            self.__iterator += 1
         else:
-            print("Ni do sie wincyj wczytoć!")
+            print("No more saves forward!")
